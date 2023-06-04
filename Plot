@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
+
+# Sample light curve data
+# Replace with your actual light curve data
+time = np.linspace(0, 1, 100)
+flux = np.random.rand(100)
+
+# Invert the data to find the dips as peaks
+invert_flux = flux * -1
+
+# Use scipy's find_peaks function to find the dips
+dips, _ = find_peaks(invert_flux, distance=20)
+
+# Plotting the light curve
+plt.figure(figsize=(10, 5))
+plt.plot(time, flux)
+
+# Marking the dips on the plot
+plt.plot(time[dips], flux[dips], "ro")
+plt.xlabel("Time")
+plt.ylabel("Flux")
+plt.title("Light Curve with detected dips")
+plt.show()
