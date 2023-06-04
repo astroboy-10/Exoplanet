@@ -1,0 +1,39 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
+
+# Number of light curve sets
+num_curves = 500
+
+# Time array
+time = np.linspace(0, 1, 100)
+
+# Array to hold flux data for each light curve
+flux_data = np.random.rand(num_curves, time.size)
+
+# Array to hold dip locations for each light curve
+dip_data = []
+
+# Find the dips in each light curve
+for flux in flux_data:
+    # Invert the data to find the dips as peaks
+    invert_flux = flux * -1
+
+    # Use scipy's find_peaks function to find the dips
+    dips, _ = find_peaks(invert_flux, distance=20)
+    
+    # Store the dip locations
+    dip_data.append(dips)
+
+# Plot a random light curve and its dips
+random_index = np.random.randint(num_curves)
+
+plt.figure(figsize=(10, 5))
+plt.plot(time, flux_data[random_index])
+
+# Marking the dips on the plot
+plt.plot(time[dip_data[random_index]], flux_data[random_index, dip_data[random_index]], "ro")
+plt.xlabel("Time")
+plt.ylabel("Flux")
+plt.title("Randomly selected light curve with detected dips")
+plt.show()
